@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Do+Hyeon&family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">        
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/main.js"></script>
+
+        <title>Study2021</title>
+      </head>
+
+      <body>
+
+          <div class="header"><h1 id="title">Study2021</h1>
+          </div>
+
+          <button onclick = "onButtonClick('가위')">가위</button>
+          <button onclick = "onButtonClick('바위')">바위</button>
+          <button onclick = "onButtonClick('보')">보</button>
+          
+          <div class ="div-scoreboard">
+          <div class ="div-scoreboard inner">
+            <div class ="div-shots-left">
+              <span > 남은 슛 횟수</span>
+              <span id ="shots-left">15</span>
+            </div>
+
+          <div class ="div-score">
+            <div class ="div-score-name">
+              컴퓨터
+            </div>
+            <div id="computer-score" class="div-score-number">0</div>
+
+          </div>
+
+          <div class ="div-score">
+            <div class ="div-score-name">사용자</div>
+            <div id="user-score" class="div-score-number">0</div>
+          </div>
+
+          <div id ="text">컴퓨터부터 시작합니다.</div>
+
+        </div>
+      </div>
+
+
+      <div class ="div-control-panel">
+        <div id ="div-computer" class ="div-panel">
+          <div class="div-control-name">컴퓨터</div>
+          <button onclick="onComputerShoot()">슛하기</button>
+        </div>
+
+        <div id= "div-user" class="div-panel">
+          <div class="div-control-name">사용자</div>
+          <button>2점슛</button>
+          <button>3점슛</button>
+        </div>
+
+      </div>
+
+      </body>
+
+
+    </html>
