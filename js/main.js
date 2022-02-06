@@ -1,133 +1,116 @@
-
-var SCISSERS = "가위";
-var ROCK = "바위";
-var PAPER = "보";
-
-
-function onButtonClick(userInput){
-
-
-var comInput;
-var rnd = Math.random();
-if (rnd <0.33){
-    comInput = SCISSERS;
-} else if (rnd < 0.66){
-    comInput = ROCK;
-} else{
-    comInput = PAPER;
-}
-
-var result = '컴퓨터:  ' + comInput;
-
-if(userInput === SCISSERS){
-    if(comInput === SCISSERS){
-    result += "  컴퓨터와 비겼습니다.";
-} else if(comInput === ROCK){
-    result += "  컴퓨터에게 졌습니다.";
-
-} else{
-    result +=  "  컴퓨터를 이겼습니다.";
-}
-}
-
-
-if(userInput === ROCK){
-    if(comInput === SCISSERS){
-        result += "  컴퓨터와 이겼습니다.";
-} else if(comInput === ROCK){
-    result +="  컴퓨터에게 비겼습니다.";
-
-} else{
-    result += "  컴퓨터와 졌습니다.";
-}
-}
-
-if(userInput === PAPER){
-    if(comInput === SCISSERS){
-        result += "  컴퓨터와 졌습니다.";
-} else if(comInput === ROCK){
-    result +="  컴퓨터를 이겼습니다.";
-
-} else{
-    result += "  컴퓨터와 비겼습니다.";
-}
-}
-
-
-
-alert(result);
-
-}
-
-
-var lottoList =[];
-
-for (var i = 1; i <= 45; i ++){
-    lottoList.push(i);
-}
-
-
-var result = [];
-for (var i = 0; i < 6; i ++){
-    var index = Math.floor(Math.random() * lottoList.length);
-
-    var num = lottoList[index];
-
-    lottoList.splice(index, 1);
-
-    result.push(num);
-}
-
-//오름차순으로 배열을 정렬하기
-function compare(a, b){
-    return a - b;
-
-}
-
-result.sort(compare);
-
-for (var i = 0; i <6; i++){
-    document.write('<span class = "ball"> '+ result[i] + '</span>');
-}
-
 var comScore = 0;
+var comPercent2 = 0.5;
+var comPercent3 = 0.33;
+
 var userScore = 0;
+var userPercent2 = 0.5;
+var userPercent3 = 0.33;
 
-function onComputerShoot(){
-    
-    var textElem = document.getElementById('text');
-    var comScoreElem = document.getElementById('computer-score');
-
-    var shootType = Math.random() < 0.5 ? 2 : 3;
+var isComputerTurn = true;
+var shotsLeft = 15;
 
 
-    if(shootType === 2){
-        if(Math.random() < 0.5){
-            textElem.innerHTML = "컴퓨터가 2점슛을 성공";
-            comScore += 2;
-            comScoreElem.innerHTML = comScore;
-        }
-        else{
-            textElem.innerHTML = "컴퓨터가 2점슛을 실패";
-
-        }
-    } else{
-        if(Math.random() < 0.33){
-            textElem.innerHTML = "컴퓨터가 3점슛을 성공";
-            comScore += 3;
-            comScoreElem.innerHTML = comScore;
-        }
-        else{
-            textElem.innerHTML = "컴퓨터가 3점슛을 실패";
-        }
-    }
-    console.log(comScore);
+function showText(s) {
+  var textElem = document.getElementById("text");
+  textElem.innerHTML = s;
 }
 
+function updateComputerScore(score) {
+  comScore += score;
+  var comScoreElem = document.getElementById("computer-score");
+  comScoreElem.innerHTML = comScore;
+}
 
-function onUserShoot(shootType){
-    var textElem = document.getElementById('text');
-    var userScoreElem = document.getElementById('user-score');
+function updateUserScore(score) {
+  userScore += score;
+  var userScoreElem = document.getElementById("user-score");
+  userScoreElem.innerHTML = userScore;
+}
 
-    
+function disableComputerButtons(flag) {
+  var computerButtons = document.getElementsByClassName("btn-computer");
+
+  for (var i = 0; i < computerButtons.length; i++) {
+    computerButtons[i].disabled = flag;
+  }
+}
+
+function disableUserButtons(flag) {
+  var userButtons = document.getElementsByClassName("btn-user");
+
+  for (var i = 0; i < userButtons.length; i++) {
+    userButtons[i].disabled = flag;
+  }
+}
+
+function onComputerShoot() {
+  var textElem = document.getElementById("text");
+  if (!isComputerTurn) return;
+
+  var shootType = Math.random() < 0.5 ? 2 : 3;
+
+  if (shootType === 2) {
+    if (Math.random() < 0.5) {
+      showText("컴퓨터가 2점슛을 성공");
+      updateComputerScore(2);
+    } else {
+      showText("컴퓨터가 2점슛을 실패");
+    }
+  } else {
+    if (Math.random() < 0.33) {
+      showText("컴퓨터가 3점슛을 성공");
+      updateComputerScore(3);
+    } else {
+      showText("컴퓨터가 3점슛을 실패");
+    }
+  }
+  isComputerTurn = false;
+
+  disableComputerButtons(true);
+  disableUserButtons(false);
+}
+
+function onUserShoot(shootType) {
+  var textElem = document.getElementById("text");
+  var userScoreElem = document.getElementById("user-score");
+  if (isComputerTurn) return;
+
+  if (shootType === 2) {
+    if (Math.random() < 0.5) {
+      showText("사용자가 2점슛을 성공");
+      updateUserScore(2);
+    } else {
+      showText("사용자가 2점슛을 실패");
+    }
+  } else {
+    if (Math.random() < 0.33) {
+      showText("사용자가 3점슛을 성공");
+      updateUserScore(3);
+    } else {
+      showText("사용자가 3점슛을 실패");
+    }
+  }
+
+  shotsLeft--;
+
+  var shotsLeftElem = document.getElementById("shots-left");
+  shotsLeftElem.innerHTML = shotsLeft;
+
+  if (shotsLeft === 0) {
+    if (userScore > comScore) textElem.innerHTML = "승리했습니다!";
+    else if (userScore < comScore) textElem.innerHTML = "아쉽게도 졌습니다.. ";
+    else textElem.innerHTML = "비겼습니다.";
+
+    for (var i = 0; i < computerButtons.length; i++) {
+      computerButtons[i].disabled = true;
+    }
+
+    for (var i = 0; i < userButtons.length; i++) {
+      userButtons[i].disabled = true;
+    }
+  }
+
+  isComputerTurn = true;
+  disableComputerButtons(false);
+  disableUserButtons(true);
 }

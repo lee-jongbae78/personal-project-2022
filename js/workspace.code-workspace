@@ -1,11 +1,14 @@
 {
 	"folders": [
 		{
-			"name": "PythonTest",
+			"path": "../../node-js-server"
+		},
+		{
 			"path": ".."
 		}
 	],
 	"settings": {
-		"git.ignoreLimitWarning": true
+		"git.ignoreLimitWarning": true,
+		"liveServer.settings.multiRootWorkspaceName": "PythonTest"
 	}
 }
